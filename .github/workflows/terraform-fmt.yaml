@@ -1,0 +1,18 @@
+name: Check Terraform formatting
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_format:
+    runs-on: ubuntu-latest
+    name: Check Terraform file are formatted correctly
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
