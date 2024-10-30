@@ -2,6 +2,7 @@
 .env
 *.tfvars
 *.tfstate
+*.tfstate*
 
 # Ignore terraform setup
 .terraform*

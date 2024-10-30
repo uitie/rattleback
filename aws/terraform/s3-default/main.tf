@@ -15,6 +15,14 @@ resource "aws_s3_bucket" "bad" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_object" "bad" {
+  bucket = aws_s3_bucket.bad.id
+
+  key = "helloworld"
+  source = "files/test.txt"
+}
+
+
 # This is a good bucket that is properly private, versioned, logged, encyrpted,
 # and inventoried.
 resource "aws_s3_bucket" "good-with-deprecation" {
@@ -44,6 +52,13 @@ resource "aws_s3_bucket" "good-with-deprecation" {
   }
 
   tags = local.tags
+}
+
+resource "aws_s3_bucket_object" "good-with-deprecation" {
+  bucket = aws_s3_bucket.good-with-deprecation.id
+
+  key = "helloworld"
+  source = "files/test.txt"
 }
 
 resource "aws_s3_bucket" "good" {
@@ -95,7 +110,12 @@ resource "aws_s3_bucket_logging" "good" {
   target_prefix = "good/"
 }
 
+resource "aws_s3_bucket_object" "good" {
+  bucket = aws_s3_bucket.good.id
 
+  key = "helloworld"
+  source = "files/test.txt"
+}
 
 # This bucket is the logging bucket, so shoulldn't be flagged for
 # anything, but some tools will flag it for not having logging enabled
