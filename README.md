@@ -14,6 +14,14 @@ In order to make the best use of this repo the idea is for the IaC to be applied
 
 Each level should have a README.md that describes what is being done, and any pre-conditions (aside from the account) that are needed.
 
+## Local Usage
+
+This repo is meant to be to be run from within the dev-container, which contains all the tools needed.
+
+### Sensitive info
+
+Where possible we mount the correct local auth files like `~/.gcloud/` so that any local auth can be used on the container.  We also ignore the `./.env` file and `*.tfvars` so that you can use those - if needed - to house sensitive infomation.
+
 ## Resources
 
 ### *Goat
