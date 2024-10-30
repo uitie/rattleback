@@ -8,11 +8,29 @@ locals {
   }
 }
 
-# This bucket should be flagged
+# This bucket should be flagged.  As of the 3.x version of this provider
+# Buckets are default private with explicit file ownership meaning the `acl`
+# setting throws an error now.  In order to make
+# a bucket public we have to adjust ownership and ACLs via separate objects.
 resource "aws_s3_bucket" "bad" {
   bucket = "${local.prefix}-bad"
 
   force_destroy = true
+}
+resource "aws_s3_bucket_ownership_controls" "bad" {
+  bucket = aws_s3_bucket.bad.id
+
+  rule {
+    # This is needed for the ACLs to be valid
+    object_ownership = "BucketOwnerPreferred"
+
+}
+resource "aws_s3_bucket_acl" "bad" {
+  bucket = aws_s3_bucket.bad.id
+
+  acl = "public-read"
+
+  depends_on = [aws_s3_bucket_ownership_controls.bad]
 }
 
 resource "aws_s3_bucket_object" "bad" {
@@ -21,6 +39,7 @@ resource "aws_s3_bucket_object" "bad" {
   key = "helloworld"
   source = "files/test.txt"
 }
+
 
 
 # This is a good bucket that is properly private, versioned, logged, encyrpted,
