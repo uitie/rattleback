@@ -4,15 +4,79 @@ A [Rattleback](https://en.wikipedia.org/wiki/Rattleback) is a geometric shape th
 
 This is an apt comparison to the ecosystem of security tools.  Some IaC is developed, which when spun up is inundated with security alerts making the DevOps' life unstable until the IaC is corrected and the fix applied.  This repository is an attempt to capture known bad configurations that should generate alerts.
 
+## Use Cases
+
+This repo is intended to be used in the following ways:
+
+### CSPM / SIEM Testing
+
+CSPMs and many tools in the security space actually check the final result of the IaC files.  Then then generally alert a human to decide how to remediate.
+
+This repo is meant to be used in those cases as each test case is can be applied to an account (hopefully a lab account) and has a known set of issues.  A human can then compare these known issues against their policies and tooling to determine what the correct alerts should be.
+
+```mermaid
+flowchart LR
+
+subgraph s1["Gomboc GitHub"]
+    rattleback(["Rattleback"])
+end
+
+subgraph s2["User's Infrastrcuture"]
+    rattleback-fork(["Rattleback"])
+end
+
+subgraph s3["User's Infrastructure Provider"]
+    uut["Unit Under Test (UUT)"]
+    related["Related Test Object"]
+end
+
+CSPM{{"CSPM"}}
+User(("User"))
+
+rattleback -.->|Forks| rattleback-fork
+User -->|Runs|rattleback-fork -->|Creates| uut & related
+CSPM -->|Monitors| s3
+CSPM -->|Alerts| User
+```
+
+### IaC Security Scanning Tool Testing
+
+Security Scanning tools usually alert the user based on just scanning the code.  This use case can also make use of this repo with the caveate that there are going to be some cases we cannot represent because the code has to be able to be applied.
+
+```mermaid
+flowchart LR
+
+subgraph s1["Gomboc GitHub"]
+    rattleback(["Rattleback"])
+end
+
+subgraph s2["User's Infrastrcuture"]
+    rattleback-fork(["Rattleback"])
+end
+
+User(("User"))
+scanner{{"Security Scanner"}}
+
+rattleback -.->|Forks| rattleback-fork
+scanner -->|Reviews| rattleback-fork
+scanner -->|Alerts| User
+```
+
 ## Directory layout
 
-In order to make the best use of this repo the idea is for the IaC to be applied directly from this repository.
+In order to keep things organized the directory layout is as follows.
 
-- `<provider>` - The infrastructure provider.
-    - `<tool>` - The layout starts with the tool needed to apply the IaC (i.e., `terraform`).
-        - `<test case>` - The test case.  The name should be hyphen delimited, and descriptive of the issue being created.
+- `<provider>` - The infrastructure provider where the test-case can be applied.  Rarely if ever will there be a test case that spans providers.
+    - `<tool>` - The tool needed to apply the test case (i.e., `terraform`).
+        - `<test case>` - The test case itself.  The name should be hyphen delimited, and descriptive of the issue being created.
 
-Each level should have a README.md that describes what is being done, and any pre-conditions (aside from the account) that are needed.
+Each level can have a README.md that describes what is being done, and any pre-conditions (aside from the account) that are needed.
+
+## Test Case
+
+This repo is intended to be a realistic set of test cases.  Each test case is meant to be fully self-standing meaning that the unit under test is the only one that should have security issues.
+
+If the tooling supports it, the unit under test should be call `uut` or should have a name, description, or tag that includes `uut` in some way.  The test-case name should also be included in all the rendered objects in some way so that they are easy to find after the fact; especially in cases of cleanup failures.
 
 ## Local Usage
 
