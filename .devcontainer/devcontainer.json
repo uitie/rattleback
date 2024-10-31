@@ -20,7 +20,10 @@
       // We need our local GitConfig
       "settings": {
         "dev.containers.copyGitConfig": true
-      }
+      },
+      "extensions": [
+        "bierner.markdown-mermaid"
+      ]
     }
   },
 
