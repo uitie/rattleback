@@ -10,8 +10,8 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "bad_bucket_acl" {
+variable "uut_bucket_acl" {
   type        = string
-  description = "Depending on policy settings this might have to be updated in order to apply."
+  description = "Allows the changing of the ACLs."
   default     = "public-read-write"
 }

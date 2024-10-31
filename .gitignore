@@ -7,3 +7,4 @@
 # Ignore terraform setup
 .terraform*
 *.plan
+*.out
