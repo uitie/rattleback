@@ -16,7 +16,7 @@ Each level should have a README.md that describes what is being done, and any pr
 
 ## Local Usage
 
-This repo is meant to be to be run from within the dev-container, which contains all the tools needed.
+This repo is meant to be run from within the dev-container, which contains all the tools needed.
 
 ### Sensitive info
 
@@ -28,4 +28,4 @@ Where possible we mount the correct local auth files like `~/.gcloud/` so that a
 
 [Bridgecrew](https://github.com/bridgecrewio) used to actively maintain a series of "Goat" repos which housed invalid configurations that their tool `checkov` checked for. While the tool is still being maintained the "Goat" repos are not.
 
-One major issue with the "Goat" repos is that because they were designed to be used by a static code tools they are written in a realistic way.  This means that while all the code can be scanned not all can be applied and not all remediations would work.
+One major issue with the "Goat" repos is that because they were designed to be used by a static code tools they are not written in a realistic way.  This means that while all the code can be scanned, it often cannot be applied, and therefore not all remediations can actually be tested.
