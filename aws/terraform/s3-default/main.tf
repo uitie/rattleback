@@ -11,9 +11,11 @@ locals {
 # This bucket should be flagged.  As of the 3.x version of this provider
 # Buckets are default private with explicit file ownership meaning the `acl`
 # setting throws an error now.  In order to make
-# a bucket public we have to adjust ownership and ACLs via separate objects.
+# a bucket public we have to adjust ownership via separate objects.
 resource "aws_s3_bucket" "bad" {
   bucket = "${local.prefix}-bad"
+
+  acl = var.bad_bucket_acl
 
   force_destroy = true
 }
@@ -23,24 +25,15 @@ resource "aws_s3_bucket_ownership_controls" "bad" {
   rule {
     # This is needed for the ACLs to be valid
     object_ownership = "BucketOwnerPreferred"
-
-}
-resource "aws_s3_bucket_acl" "bad" {
-  bucket = aws_s3_bucket.bad.id
-
-  acl = "public-read"
-
-  depends_on = [aws_s3_bucket_ownership_controls.bad]
+  }
 }
 
 resource "aws_s3_bucket_object" "bad" {
   bucket = aws_s3_bucket.bad.id
 
-  key = "helloworld"
+  key    = "helloworld"
   source = "files/test.txt"
 }
-
-
 
 # This is a good bucket that is properly private, versioned, logged, encyrpted,
 # and inventoried.
@@ -60,13 +53,13 @@ resource "aws_s3_bucket" "good-with-deprecation" {
     rule {
       apply_server_side_encryption_by_default {
         sse_algorithm     = "aws:kms"
-        kms_master_key_id = "${aws_kms_key.s3_key.arn}"
+        kms_master_key_id = aws_kms_key.s3_key.arn
       }
     }
   }
 
   logging {
-    target_bucket = "${aws_s3_bucket.logs.id}"
+    target_bucket = aws_s3_bucket.logs.id
     target_prefix = "good-with-deprecation/"
   }
 
@@ -76,7 +69,7 @@ resource "aws_s3_bucket" "good-with-deprecation" {
 resource "aws_s3_bucket_object" "good-with-deprecation" {
   bucket = aws_s3_bucket.good-with-deprecation.id
 
-  key = "helloworld"
+  key    = "helloworld"
   source = "files/test.txt"
 }
 
@@ -118,7 +111,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "good" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm     = "aws:kms"
-      kms_master_key_id = "${aws_kms_key.s3_key.arn}"
+      kms_master_key_id = aws_kms_key.s3_key.arn
     }
   }
 }
@@ -132,7 +125,7 @@ resource "aws_s3_bucket_logging" "good" {
 resource "aws_s3_bucket_object" "good" {
   bucket = aws_s3_bucket.good.id
 
-  key = "helloworld"
+  key    = "helloworld"
   source = "files/test.txt"
 }
 
@@ -156,7 +149,7 @@ resource "aws_s3_bucket_ownership_controls" "logs" {
 resource "aws_s3_bucket_acl" "logs" {
   bucket = aws_s3_bucket.logs.id
 
-  acl = "private"
+  acl = "log-delivery-write"
 
   depends_on = [aws_s3_bucket_ownership_controls.good]
 }
@@ -173,7 +166,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm     = "aws:kms"
-      kms_master_key_id = "${aws_kms_key.s3_key.arn}"
+      kms_master_key_id = aws_kms_key.s3_key.arn
     }
   }
 }
@@ -185,7 +178,7 @@ resource "aws_kms_key" "s3_key" {
 
   deletion_window_in_days = 7 # Min days we can set it to
 
-  enable_key_rotation = true
+  enable_key_rotation     = true
   rotation_period_in_days = 90 # min rotation period
 
   tags = local.tags
