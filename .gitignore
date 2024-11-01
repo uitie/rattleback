@@ -1,0 +1,10 @@
+# Ignore things that could have secrets
+.env
+*.tfvars
+*.tfstate
+*.tfstate*
+
+# Ignore terraform setup
+.terraform*
+*.plan
+*.out

@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+  "name": "Debian",
+
+  "build": { "dockerfile": "Dockerfile" },
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/flexwie/devcontainer-features/op:1": {}
+  },
+
+  // This will allow ENV variables to be loaded from .env
+  "runArgs": ["--env-file",".env"],
+  "initializeCommand": "touch .env && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.terraform.d && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.config/gcloud",
+
+  "customizations": {
+    "vscode": {
+      // We need our local GitConfig
+      "settings": {
+        "dev.containers.copyGitConfig": true
+      },
+      "extensions": [
+        "bierner.markdown-mermaid"
+      ]
+    }
+  },
+
+  // Mount local paths into the container
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.terraform.d,target=/home/vscode/.terraform.d,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gcloud,target=/home/vscode/.config/gcloud,type=bind,consistency=cached"
+  ]
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
