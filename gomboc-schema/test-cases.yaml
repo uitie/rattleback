@@ -77,8 +77,8 @@ properties:
           uniqueItems: true
         benchmarkRecommendations:
           description: |
-            An exclusive list of Benchmark Recommendations that need to be
-            enabled in Gomboc that apply to this test case.
+            The entire list of benchmark recommendations that are needed to
+            catch this test case.
           type: array
           uniqueItems: true
           items:
@@ -100,6 +100,53 @@ properties:
               benchmarkVersion:
                 description: The version of the benchmark
                 type: string
+        scanBeforeCreate:
+          description: |-
+            Do the scan test before applying the IaC if canBeApplied is set
+            to true.  It is useful to set this to false when there are options
+            that cannot be changed once set, and therefore the diff should not
+            attempt to change them.
+          type: boolean
+          default: true
+        scanTools:
+          description: |-
+            Define the list of failures that scaning tools should identify.
+          type: array
+          items:
+            type: object
+            required:
+              - tool
+              - findings
+            properties:
+              tool:
+                description: The Tool vendor
+                type: string
+              exclusive:
+                description: |-
+                  Only these issues should be found.  If other issues are found
+                  then it is likely a misconfiguration and the test should fail.
+                type: bool
+                default: false
+              findings:
+                description: |-
+                  The list of things that tool should have found
+                type: array
+                items:
+                  type: object
+                  required:
+                    - type
+                    - id
+                  properties:
+                    type:
+                      description: The type of finding
+                      type: string
+                    id:
+                      description: The tool's finding id
+                      type: string
+                    name:
+                      description: Human readable name of the finding
+                      type: string
+
     minItems: 1
     uniqueItems: true
 

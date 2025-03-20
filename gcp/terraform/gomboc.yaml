@@ -14,3 +14,10 @@ testCases:
         name: Ensure that cloud storage buckets have uniform bucket-level access enabled
         benchmark: CIS Google Cloud Platform Foundations
         benchmarkVersion: v3.0.0
+
+    scanTools:
+      - tool: Wiz
+        findings:
+          - type: CI_CD_SCAN
+            id: StorageBucket-004
+            name: Bucket uniform bucket-level access should be enabled
