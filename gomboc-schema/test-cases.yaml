@@ -146,6 +146,12 @@ properties:
                     name:
                       description: Human readable name of the finding
                       type: string
+                    ignore:
+                      description: |-
+                        This finding may or may not be found.  It doesn't matter
+                        either way.
+                      type: boolean
+                      default: false
 
     minItems: 1
     uniqueItems: true
