@@ -78,6 +78,17 @@ This repo is intended to be a realistic set of test cases.  Each test case is me
 
 If the tooling supports it, the unit under test should be call `uut` or should have a name, description, or tag that includes `uut` in some way.  The test-case name should also be included in all the rendered objects in some way so that they are easy to find after the fact; especially in cases of cleanup failures.
 
+### Labels & Tags
+
+If and where possible all objects created by test cases should have tags or labels equivelent to:
+
+- TestRepo: rattleback
+- TestPath: path/to/test
+
+> [!NOTE]
+> The key and value may need to be updated for the provider.  For example,
+> for GCP only lowercase letter, '-', and '_' are allowed.
+
 ## Local Usage
 
 This repo is meant to be run from within the dev-container, which contains all the tools needed.
