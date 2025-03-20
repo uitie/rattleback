@@ -125,7 +125,7 @@ properties:
                 description: |-
                   Only these issues should be found.  If other issues are found
                   then it is likely a misconfiguration and the test should fail.
-                type: bool
+                type: boolean
                 default: false
               findings:
                 description: |-
