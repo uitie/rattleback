@@ -84,7 +84,7 @@ This repo is meant to be run from within the dev-container, which contains all t
 
 ### Sensitive info
 
-Where possible we mount the correct local auth files like `~/.gcloud/` so that any local auth can be used on the container.  We also ignore the `./.env` file and `*.tfvars` so that you can use those - if needed - to house sensitive infomation.
+Where possible we mount the correct local auth files like `~/.gcloud/` so that any local auth can be used on the container.  We also ignore the `./.env` file and `*.tfvars` so that you can use those - if needed - to house sensitive information.
 
 ## Resources
 
