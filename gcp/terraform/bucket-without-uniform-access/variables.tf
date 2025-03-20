@@ -8,3 +8,8 @@ variable "bucket_location" {
   description = "The location of the bucket.  Can be Multi-region, or Regional"
   default     = "US"
 }
+
+variable "gcp_project" {
+  type = string
+  description = "The GCP project to put the bucket into"
+}

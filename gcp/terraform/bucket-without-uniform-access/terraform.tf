@@ -9,3 +9,11 @@ terraform {
 
   required_version = ">= 1.1.0"
 }
+
+provider "google" {
+  project = var.gcp_project
+  default_labels = {
+    "test-repo" = "rattleback",
+    "test-path" = "gcp_terraform_bucket-without-uniform-access"
+  }
+}
