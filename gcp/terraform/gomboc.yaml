@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../gomboc-schema/test-cases.yaml
+
+description: All the test cases for GCP
+
+testCases:
+  - name: bucket should have uniform access
+    provider: GCP
+    iac:
+      language: terraform
+      version: v1.5.8
+    path: bucket-without-uniform-access
+    benchmarkRecommendations:
+      - id: "5.2"
+        name: Ensure that cloud storage buckets have uniform bucket-level access enabled
+        benchmark: CIS Google Cloud Platform Foundations
+        benchmarkVersion: v3.0.0

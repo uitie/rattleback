@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=https://json-schema.org/draft/2020-12/schema
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: gomboc-schema.yaml
+title: Gomboc Test Cases
+type: object
+properties:
+  description:
+    description: Description of what is being tested
+    type: string
+  testCases:
+    description: A list of test cases
+    type: array
+    items:
+      type: object
+      required:
+        - name
+        - path
+        - provider
+        - iac
+      properties:
+        name:
+          description: Name of the test case
+          type: string
+        description:
+          description: The description of the test case
+          type: string
+        provider:
+          description: The provider for which the test cases apply
+          enum:
+            - AWS
+            - Azure
+            - GCP
+        iac:
+          description: The details on the IaC being used by tests.
+          type: object
+          required:
+            - language
+          properties:
+            language:
+              description: The name of the IaC language
+              enum:
+                - "terraform"
+                - "CloudFormation"
+            version:
+              description: |-
+                The version of the language used.  For terraform this is the version
+                to use, and is required.
+              type: string
+          if:
+            properties:
+              language:
+                const: "terraform"
+          then:
+            required:
+              - version
+        path:
+          description: The path to the directory containing the terraform to apply
+          type: string
+        expectedIaC:
+          description: |
+            The path to the directory where the correct IaC is present.
+            If this is not provided then the test is assumed to be a alert
+            and not a diff.  Otherwise the patched IaC is compared to this IaC.
+          type: string
+        canBeApplied:
+          description: |
+            If true this can be applied to actual provider.  This is useful for
+            testing integrations with other systems that scan actual cloud
+            deployments.
+          type: boolean
+        tags:
+          description: Tags for this test case, which is useful in selecting test cases
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        benchmarkRecommendations:
+          description: |
+            An exclusive list of Benchmark Recommendations that need to be
+            enabled in Gomboc that apply to this test case.
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            required:
+              - id
+              - benchmark
+              - benchmarkVersion
+            properties:
+              id:
+                description: The ID of this recommendation as it is in the benchmark
+                type: string
+              name:
+                description: The full name of the rule
+                type: string
+              benchmark:
+                description: The name of the benchmark this recommendation is from
+                type: string
+              benchmarkVersion:
+                description: The version of the benchmark
+                type: string
+    minItems: 1
+    uniqueItems: true
+
+  tags:
+    description: Tags that are applied to all
+
+required:
+  - description
+  - testCases
