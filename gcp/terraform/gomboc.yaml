@@ -3,4 +3,18 @@
 description: All the test cases for GCP
 
 testCases:
+  - path: ./bucket-anonymous/gomboc.yaml
+    tags:
+      - deleteResource
+  - path: ./bucket-public/gomboc.yaml
+    tags:
+      - deleteResource
   - path: ./bucket-without-uniform-access/gomboc.yaml
+    tags:
+      - updateResource
+  - path: ./dns-zone-with-sha1/gomboc.yaml
+    tags:
+      - updateResource
+  - path: ./dns-zone-without-dnssec/gomboc.yaml
+    tags:
+      - addBlock
