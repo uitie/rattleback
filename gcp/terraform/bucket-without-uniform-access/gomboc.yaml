@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../gomboc-schema/test-case.yaml
 
-name: bucket should have uniform access
+name: Bucket should have uniform access
 
 provider: GCP
 iac:
