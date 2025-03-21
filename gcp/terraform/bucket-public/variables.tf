@@ -15,7 +15,7 @@ variable "bucket_location" {
 }
 
 variable "role" {
-  type = string
+  type        = string
   description = "The storage bucket role to give allUsers"
-  default = "roles/storage.legacyBucketReader"
+  default     = "roles/storage.legacyBucketReader"
 }
