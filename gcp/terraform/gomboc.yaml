@@ -1,39 +1,6 @@
-# yaml-language-server: $schema=../../gomboc-schema/test-cases.yaml
+# yaml-language-server: $schema=../../gomboc-schema/test-suite.yaml
 
 description: All the test cases for GCP
 
 testCases:
-  - name: bucket should have uniform access
-    provider: GCP
-    iac:
-      language: terraform
-      version: v1.5.8
-    path: bucket-without-uniform-access
-    benchmarkRecommendations:
-      - id: "5.2"
-        name: Ensure that cloud storage buckets have uniform bucket-level access enabled
-        benchmark: CIS Google Cloud Platform Foundations
-        benchmarkVersion: v3.0.0
-
-    scanTools:
-      - tool: Wiz
-        findings:
-          - type: CI_CD_SCAN
-            id: StorageBucket-004
-            name: Bucket uniform bucket-level access should be enabled
-
-          # The following are things that might also be found, that we don't
-          # care about
-          - type: CI_CD_SCAN
-            id: StorageBucket-039
-            ignore: true
-          - type: CI_CD_SCAN
-            id: StorageBucket-002
-            ignore: true
-          - type: CI_CD_SCAN
-            id: StorageBucket-003
-            ignore: true
-          - type: CI_CD_SCAN
-            id: StorageBucket-001
-            ignore: true
-
+  - path: ./bucket-without-uniform-access/gomboc.yaml
