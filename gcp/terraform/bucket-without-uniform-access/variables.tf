@@ -10,6 +10,6 @@ variable "bucket_location" {
 }
 
 variable "gcp_project" {
-  type = string
+  type        = string
   description = "The GCP project to put the bucket into"
 }

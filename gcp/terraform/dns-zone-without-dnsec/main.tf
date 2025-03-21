@@ -4,6 +4,6 @@ resource "random_id" "rnd" {
 
 resource "google_dns_managed_zone" "uut" {
   name        = var.name
-   dns_name    = var.domain == "" ? "${random_id.rnd.hex}.com." : var.domain
+  dns_name    = var.domain == "" ? "${random_id.rnd.hex}.com." : var.domain
   description = "UUT"
 }
