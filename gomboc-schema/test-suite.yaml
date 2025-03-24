@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://json-schema.org/draft/2020-12/schema
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: gomboc-schema.yaml
+title: Gomboc Test Suite
+description: |-
+  Describes a series of test cases that can be run in a suite.
+type: object
+properties:
+  description:
+    description: Description of what is being tested
+    type: string
+  testCases:
+    description: A list of test cases
+    type: array
+    items:
+      type: object
+      required:
+        - path
+      properties:
+        path:
+          description: The path to the directory containing the terraform to apply
+          type: string
+        tags:
+          description: |-
+            Additional tags for the test case.  These are merged with the tags
+            in the test case.
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+    minItems: 1
+    uniqueItems: true
+
+  tags:
+    description: Tags that are applied to all
+
+required:
+  - description
+  - testCases

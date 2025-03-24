@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../gomboc-schema/test-case.yaml
+
+name: Bucket should not be public
+
+provider: GCP
+iac:
+  language: terraform
+  version: v1.5.8
+
+benchmarkRecommendations:
+  - id: "5.1"
+    name: "Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible"
+    benchmark: CIS Google Cloud Platform Foundations
+    benchmarkVersion: v3.0.0

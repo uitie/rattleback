@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../gomboc-schema/test-case.yaml
+
+name: DNSSEC should be enabled for Cloud DNS
+
+provider: GCP
+iac:
+  language: terraform
+  version: v1.5.8
+
+benchmarkRecommendations:
+  - id: "3.3"
+    name: Ensure That DNSSEC Is Enabled for Cloud DNS
+    benchmark: CIS Google Cloud Platform Foundations
+    benchmarkVersion: v3.0.0

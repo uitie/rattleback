@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../gomboc-schema/test-case.yaml
+
+name: DNSSEC should not use SHA1
+
+provider: GCP
+iac:
+  language: terraform
+  version: v1.5.8
+
+# Google doesn't allow SHA1 to be used, so you cannot apply this anymore
+canBeApplied: false
+
+benchmarkRecommendations:
+  - id: "3.4"
+    name: "Ensure That RSASHA1 Is Not Used for the Key-Signing Key in Cloud DNS DNSSEC"
+    benchmark: CIS Google Cloud Platform Foundations
+    benchmarkVersion: v3.0.0
+  - id: "3.5"
+    name: "Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC"
+    benchmark: CIS Google Cloud Platform Foundations
+    benchmarkVersion: v3.0.0
