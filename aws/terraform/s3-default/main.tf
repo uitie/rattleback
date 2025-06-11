@@ -54,6 +54,7 @@ resource "aws_s3_bucket_acl" "uut" {
 }
 
 
+# Edit to trigger scan
 resource "aws_s3_object" "uut" {
   bucket = aws_s3_bucket.uut.id
 
